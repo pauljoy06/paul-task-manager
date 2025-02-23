@@ -1,3 +1,18 @@
+import Modal from "./modal";
+
+/**
+     * Icon component for displaying an icon with customizable size and style.
+     * 
+     * @param {Object} props - Component props
+     * @param {string} props.path - Path to the icon image
+     * @param {number} [props.size=12] - Size of the icon (applies to both width and height)
+     * @param {number} [props.width] - Width of the icon (overrides size if provided)
+     * @param {number} [props.height] - Height of the icon (overrides size if provided)
+     * @param {Function} [props.onClick] - Click handler for the icon
+     * @param {string} [props.className] - Additional class names for styling
+     * @param {Object} [props.style] - Additional inline styles
+     * @returns {JSX.Element} The rendered Icon component
+ */
 function Icon(props) {
     let width, height;
 
@@ -35,4 +50,5 @@ function Icon(props) {
 
 export {
     Icon,
+    Modal,
 }

@@ -14,12 +14,11 @@ export default function Sidebar() {
         {
             name: 'Tasks',
             icon: 'tasks.svg',
-            height: 16,
-            width: 15,
+            height: 20,
+            width: 20,
             url: '/tasks',
         },
     ]
-
 
     function onSidebarToggle(e) {
         e.preventDefault();

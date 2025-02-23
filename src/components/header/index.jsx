@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 
-export default function Header(props) {
+export default function Header() {
     return <div id='header'>
         <div className='left-section'>
             <Link to='/' className='app-logo'>

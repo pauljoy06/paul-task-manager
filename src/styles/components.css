@@ -1,68 +1,67 @@
 #header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 9;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  padding: 0 50px 0 20px;
-  height: var(--header-height);
-
-  box-shadow: 0 0 18px 0 #E6E6E6;
-  z-index: 20;
-
-  background-color: var(--white);
-
-  .left-section {
-    .app-logo img {
-      width: 32px;
-    }
-  }
-
-  .right-section {
-    /* justify-self: flex-end; */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9;
     display: flex;
     align-items: center;
-    gap: 15px;
+    justify-content: space-between;
 
-    .user-profile-picture {
-      img {
-        width: 40px;
-        height: 40px;
+    padding: 0 50px 0 20px;
+    height: var(--header-height);
 
-        border-radius: 99px;
-        object-fit: cover;
-      }
+    box-shadow: 0 0 18px 0 #E6E6E6;
+    z-index: 20;
+
+    background-color: var(--white);
+
+    .left-section {
+        .app-logo img {
+            width: 32px;
+        }
     }
 
-    .user-details {
-      .user-name {
-        font-weight: 600;
-        font-size: 1.531em;
-      }
-
-      .user-role {
+    .right-section {
+        /* justify-self: flex-end; */
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 15px;
 
-        .role-name {
-          font-size: 0.918em;
-          font-weight: 500;
+        .user-profile-picture {
+            img {
+                width: 40px;
+                height: 40px;
+
+                border-radius: 99px;
+                object-fit: cover;
+            }
         }
 
-        .role-icon {
-          height: 12px;
-          width: 12px;
+        .user-details {
+            .user-name {
+                font-weight: 600;
+                font-size: 1.531em;
+            }
+
+            .user-role {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+
+                .role-name {
+                    font-size: 0.918em;
+                    font-weight: 500;
+                }
+
+                .role-icon {
+                    height: 12px;
+                    width: 12px;
+                }
+            }
         }
-      }
     }
-  }
 }
-
 
 #sidebar {
     position: fixed;
@@ -114,6 +113,1119 @@
     .sidebar-toggle {
         width: 100%;
         height: 60px;
+    }
+}
+
+.modal {
+    display: grid;
+
+    grid-template-rows: 150px max-content 1fr;
+    grid-template-columns: 1fr max-content 1fr;
+    grid-template-areas:
+        '.      .     .'
+        '.      inner .'
+        '.      .     .'
+        ;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+
+    z-index: 100;
+    background-color: rgba(0, 0, 0, 0.5);
+
+    .inner {
+        grid-area: inner;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        /* For the close link */
+
+        /* z-index: 100; */
+        background-color: #fff;
+        border-radius: 10px;
+
+        .header {
+            position: relative;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+
+            /* width: 100%; */
+            height: 90px;
+            padding: 20px 25px 20px 30px;
+
+            h2 {
+                font-weight: 600;
+                font-size: 1.698em;
+                color: #2c406e;
+            }
+
+            button.close-button {
+                position: absolute;
+                top: 29px;
+                right: 34px;
+
+                padding: 0;
+                /*To over-ride padding from header. Remove if not required*/
+
+                background: none;
+            }
+        }
+
+        .body {
+            /* width: 100%; */
+            padding: 15px 50px 40px 50px;
+        }
+
+        .footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            /* width: 100%; */
+            height: 90px;
+            padding: 20px 50px;
+
+            border-top: 1px solid #eee;
+        }
+    }
+}
+
+.button {
+    padding: 11px 30px;
+
+    white-space: nowrap;
+    border-radius: 10px;
+    font-weight: 500;
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+}
+
+.primary-button {
+    color: var(--primary-button-color);
+    background-color: var(--primary-button-background);
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: default;
+    }
+}
+
+.danger-button {
+    color: var(--danger-button-color);
+    background-color: var(--danger-button-background);
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: default;
+    }
+}
+
+.secondary-button {
+    color: #8f9eb8;
+    background: rgba(143, 158, 184, 0.09);
+}
+
+.input,
+.date-field,
+.select-field,
+.radio-field,
+.checkbox-field,
+.file-field,
+.drop-down-multiselect,
+.time-input {
+    position: relative;
+    width: 100%;
+
+    label.label,
+    label.title {
+        position: absolute;
+        z-index: 1;
+        top: -8px;
+        display: inline-block;
+
+        padding: 0px 10px;
+        /* margin-bottom: 5px; */
+
+        font-weight: 400;
+        font-size: 0.95em;
+        /* font-size: 1.263em; */
+        /* letter-spacing: 0.043em; */
+        color: var(--label-color);
+        cursor: default;
+        background-color: #fff;
+        border-radius: 0 10px 10px 0;
+
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 70%;
+    }
+
+    label.error-label {
+        font-weight: 500;
+        color: var(--red);
+    }
+
+    label.read-state-label {
+        font-weight: 500;
+        font-size: 0.95em;
+        /* font-size: 1.263em; */
+        letter-spacing: 0.043em;
+        color: var(--label-color);
+        cursor: default;
+
+        display: inline-block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%;
+    }
+
+    &>.date-input,
+    .select-input,
+    .select-field-inner,
+    .time-input-display {
+        height: 50px;
+        margin: 5px 0 0 0;
+
+        background-color: #fff;
+    }
+
+    &>textarea,
+    .hidden-div,
+    .date-input,
+    .select-field-inner>.select-top {
+        width: 100%;
+        padding: 0 20px;
+
+        color: var(--input-value-color);
+        border: 1px solid var(--input-border-color);
+        border-radius: 5px;
+        /* font-size: 0.96em; */
+        /* font-size: 1.354em; */
+
+        &:focus {
+            outline: none;
+        }
+
+        &:disabled {}
+    }
+
+    .input-element-wrapper {
+        position: relative;
+        /* For the dropdown suggestion */
+        display: flex;
+        align-items: center;
+        /* gap: 10px; */
+
+        width: 100%;
+        height: 50px;
+        margin: 5px 0 0 0;
+
+        border: 1px solid var(--input-border-color);
+        border-radius: 2px;
+        /* font-size: 0.76em; */
+        color: var(--input-placeholder-color);
+        background-color: #fff;
+
+        &.disabled {
+            color: #aab1c1;
+            background-color: #fafafa;
+        }
+
+        .icon {
+            margin-left: 20px;
+            flex-shrink: 0;
+        }
+
+        input.input-element {
+            flex-grow: 1;
+
+            padding: 0 20px;
+            width: 100%;
+            height: 100%;
+
+            border: 0;
+            border-radius: 5px;
+            /* To not crop the parent's border radius */
+
+            &:focus {
+                outline: none;
+            }
+
+            &:disabled {
+                color: inherit;
+                background-color: inherit;
+            }
+
+            &::placeholder {
+                color: var(--input-placeholder-color);
+                opacity: 0.5;
+            }
+        }
+
+        .input-inside-right {
+            margin-right: 20px;
+
+            white-space: nowrap;
+        }
+
+        .suggestions {
+            position: absolute;
+            top: 50px;
+            display: flex;
+            flex-direction: column;
+
+            width: 100%;
+            max-height: 187px;
+            overflow-y: auto;
+
+            z-index: 1;
+
+            /* background-color: red; */
+            border: 1px solid black;
+            border-radius: 0 0 10px 10px;
+            background-color: #fff;
+
+            button.suggestion {
+                padding: 12px 16px;
+
+                border-bottom: 1px solid black;
+                cursor: default;
+                color: var(--input-value-color);
+                font-size: 0.95em;
+                text-align: left;
+
+                &:hover {
+                    background-color: #fbfbfb;
+                }
+
+                .suggestion-character {
+                    &.match {
+                        font-weight: 500;
+                    }
+                }
+            }
+        }
+    }
+
+    &>textarea {
+        margin-top: 5px;
+        padding: 17px 20px;
+
+        resize: none;
+    }
+
+    .select-field-inner {
+        position: relative;
+
+        .select-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            height: 100%;
+            padding: 0 15px;
+            padding-right: 0;
+
+            cursor: default;
+            user-select: none;
+            border: 1px solid var(--input-border-color);
+            border-radius: 5px;
+
+            input[type='text'] {
+                width: 100%;
+                height: 100%;
+                border: 0;
+                outline: 0;
+                line-height: 0.5em;
+
+                &.filter-text {}
+
+                &.option-selected::placeholder {
+                    color: #444;
+                    color: var(--dark-text);
+                }
+            }
+
+            .select-box-left {
+                .selected-option-name {}
+
+                .placeholder {
+                    color: var(--input-placeholder-color);
+                    opacity: 0.5;
+                    font-size: 0.93em;
+                }
+            }
+
+            .select-box-right {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 100%;
+                padding-right: 15px;
+
+                .icon {}
+            }
+        }
+
+        .select-options {
+            position: absolute;
+            top: 53px;
+            display: flex;
+            flex-direction: column;
+
+            max-height: 202px;
+            overflow-x: hidden;
+            overflow-y: auto;
+            width: calc(100% + 30px);
+            margin-left: -15px;
+            margin-right: 15px;
+
+            z-index: 2;
+            border: 1px solid #f6f7f9;
+            border-radius: var(--option-border-radius);
+            box-shadow: 0 0 10px 0 #e5e5e5;
+
+            button.select-option {
+                display: flex;
+                align-items: center;
+                flex-shrink: 0;
+
+                height: 50px;
+                padding-left: 15px;
+
+                background-color: #fff;
+                cursor: default;
+                user-select: none;
+                border: 0;
+                outline: 0;
+                color: #a1b1cf;
+
+                .suggestion-character {
+                    &.match {
+                        font-weight: 500;
+                    }
+                }
+
+                &:hover {
+                    font-weight: 600;
+                    color: var(--dark-text);
+                    background-color: #fafafa;
+                }
+
+                &.selected {
+                    font-weight: 600;
+                    color: var(--dark-text);
+                    background-color: #fafafa;
+                }
+
+                /* To avoid the background color of the child cutting the
+                    * border radius of the parent */
+                &:first-child {
+                    border-radius: var(--option-border-radius) var(--option-border-radius) 0 0;
+                }
+
+                &:last-child {
+                    border-radius: 0 0 var(--option-border-radius) var(--option-border-radius);
+                }
+            }
+
+            .select-options-no-data {
+                display: flex;
+                align-items: center;
+                flex-shrink: 0;
+
+                height: 50px;
+                padding-left: 15px;
+
+                background-color: #fff;
+                cursor: default;
+                user-select: none;
+                border: 0;
+                outline: 0;
+                color: #a1b1cf;
+            }
+        }
+    }
+
+    .date-input {
+        /* For the calendar cometh inside this element and that shalt be absolutely
+* positioned. */
+        position: relative;
+
+        .date-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            height: 100%;
+
+            cursor: pointer;
+
+            .placeholder {
+                color: var(--input-placeholder-color);
+            }
+        }
+
+        .calendar {
+            position: absolute;
+            top: 56px;
+            left: -13px;
+
+            margin-top: 0;
+            padding: 15px 20px 20px 20px;
+
+            z-index: 2;
+            border: 1px solid #f1f1f1;
+            background-color: #fff;
+            border-radius: 20px;
+            box-shadow: 0 16px 25px 0 #eee;
+            /*Added as part of Azaad*/
+            font-size: 0.9em;
+
+            .date-header {
+                margin-bottom: 10px;
+
+                .date-input {
+                    width: 105px;
+                    padding: 4px 5px;
+
+                    font-size: 1.1em;
+                    letter-spacing: 0.05em;
+                }
+
+                .time-input {
+                    float: right;
+
+                    width: 90px;
+                    padding: 4px 5px;
+
+                    font-size: 1.1em;
+                    letter-spacing: 0.05em;
+                }
+            }
+
+            table.calendar-table {
+                border-collapse: collapse;
+                table-layout: fixed;
+                width: auto;
+
+                thead.calendar-header {
+                    user-select: none;
+
+                    tr.calendar-header-row.controls-row {
+                        td.calendar-header-data {
+                            .control-data.arrow {
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+
+                                /* padding: 10px; */
+                                /* Spacing between this and the below row */
+                                margin-bottom: 10px;
+                                margin-left: 0;
+
+                                border: 0;
+                                /* background-color: red; */
+                                cursor: pointer;
+                            }
+
+                            .control-data.month-year {
+                                display: flex;
+                                justify-content: center;
+
+                                margin-bottom: 10px;
+                                font-size: 0.9em;
+                            }
+
+                            .month-year {
+                                font-weight: 500;
+                                font-size: 1.07em;
+                                color: #282c34;
+
+                                .month-wrapper {
+                                    position: relative;
+
+                                    .selected-month {}
+
+                                    .calendar-months-list {
+                                        position: absolute;
+                                        top: 100%;
+                                        left: -20px;
+
+                                        max-height: 300px;
+
+                                        overflow-y: auto;
+                                        border-radius: 5px;
+                                        background-color: var(--white);
+                                        box-shadow: 0px 0px 20px 2px rgba(0, 0, 0, 0.10);
+
+                                        .calendar-month-item {
+                                            padding: 7px 20px 7px 20px;
+
+                                            color: var(--light-text);
+
+                                            &:hover {
+                                                font-weight: 500px;
+                                                color: var(--dark-text);
+                                                background-color: #f6f6f6;
+                                            }
+                                        }
+                                    }
+                                }
+
+                                .year-wrapper {
+                                    position: relative;
+
+                                    margin-left: 9px;
+
+                                    .selected-year {}
+
+                                    .calendar-years-list {
+                                        position: absolute;
+                                        top: 100%;
+                                        left: -20px;
+
+                                        max-height: 300px;
+
+                                        overflow-y: auto;
+                                        border-radius: 5px;
+                                        background-color: var(--white);
+                                        box-shadow: 0px 0px 20px 2px rgba(0, 0, 0, 0.10);
+
+                                        .calendar-year-item {
+                                            padding: 7px 20px 7px 20px;
+
+                                            color: var(--light-text);
+
+                                            &:hover {
+                                                font-weight: 500px;
+                                                color: var(--dark-text);
+                                                background-color: #f6f6f6;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            &.arrow-cell {
+                                /* display: inline-flex; */
+                                /* width: 100%; */
+                                /* height: 100%; */
+                                /* justify-content: center; */
+
+                                /* display: table-cell; */
+                                /* margin-bottom: 15px; */
+                                /* text-align: center; */
+
+                                .control-data {
+                                    /* display: flex; */
+                                    /* align-items: center; */
+                                    /* justify-content: center; */
+
+                                    width: 100%;
+                                    height: 100%;
+                                }
+                            }
+                        }
+
+                        td.disabled {
+                            opacity: 0.25;
+                            pointer-events: none;
+                        }
+                    }
+
+                    tr.calendar-header-row.weeks-row {
+                        th {
+                            font-weight: normal;
+                            color: rgba(101, 109, 122, 0.6);
+                        }
+                    }
+                }
+
+                tbody.calendar-body {
+                    user-select: none;
+
+                    tr.calendar-body-row {
+                        td.calendar-body-data {
+                            padding: 3px;
+
+                            /* border: 1px solid #fff; */
+                            cursor: pointer;
+                            text-align: center;
+                            font-weight: 500;
+
+                            .day-wrapper {
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+
+                                width: 32px;
+                                height: 34px;
+                                padding: 2px;
+                            }
+                        }
+
+                        td.selected-day {
+                            font-weight: bold !important;
+                            /* TODO: Make work without !important */
+                            /*color: #2c0a5e !important;  /* TODO: Make work without !important */
+                            color: #fff !important;
+
+                            .day-wrapper {
+                                border-radius: 7px;
+                                background-color: blue;
+                            }
+                        }
+
+                        td.today {
+                            position: relative;
+
+                            &:after {
+                                content: '';
+                                position: absolute;
+                                bottom: 5px;
+                                left: calc(50% - 2px);
+
+                                width: 5px;
+                                height: 5px;
+
+                                background-color: #30C4B8;
+                                border-radius: 999px;
+                            }
+                        }
+
+                        td.disabled {
+                            color: #ccc !important;
+                            pointer-events: none;
+                        }
+                    }
+                }
+            }
+
+            .date-footer {
+                display: flex;
+                justify-content: space-between;
+
+                margin-top: 10px;
+
+                .calendar-control-button {
+                    width: 77px;
+                    padding: 12px 0;
+                    color: #fff;
+                    outline: 0;
+                    border: 0;
+                    cursor: pointer;
+                    font-weight: 500;
+                    border-radius: 5px;
+                }
+
+                .clear-button {
+                    border: 1px solid #f2f2f2;
+                    background-color: #fff;
+                    color: var(--light-text);
+                }
+
+                .set-button {
+                    color: var(--dark-text);
+                    background-color: var(--yellow);
+                }
+            }
+        }
+    }
+
+    &.disabled {
+        .date-input {
+            color: #aab1c1;
+            background-color: #fafafa;
+            cursor: pointer;
+            pointer-events: none;
+            border: 1px solid #e9ecf1;
+        }
+    }
+
+    .select-input {
+        &>div {
+            border: 1px solid var(--input-border-color);
+            border-radius: 5px;
+        }
+    }
+
+    .time-input-display {
+        border-radius: 5px;
+        border: 1px solid var(--input-border-color);
+
+        .time-input-box {
+            display: flex;
+
+            padding: 0 15px;
+            height: 100%;
+
+            border-radius: 5px 5px 0 0;
+
+            input[type='text'].time-input-field {
+                width: 100%;
+                height: 100%;
+                border: 0;
+                outline: 0;
+                line-height: 0.5em;
+
+                &.filter-text {}
+
+                &.time-input-field::placeholder {
+                    color: var(--dark-text);
+                }
+            }
+
+            .time-input-right {
+                display: flex;
+                align-items: center;
+            }
+        }
+
+        .time-options {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+
+            max-height: 200px;
+
+            overflow-y: auto;
+            background-color: var(--white);
+            border-radius: 0 0 8px 8px;
+            border: 1px solid #f6f7f9;
+            box-shadow: 0 0 10px 0 #e5e5e5;
+
+            .time-option {
+                display: flex;
+                justify-content: flex-start;
+
+                padding: 10px 0 10px 15px;
+
+                color: var(--light-text);
+
+                &:hover {
+                    font-weight: 600;
+                    color: var(--dark-text);
+                    background-color: #fafafa;
+                }
+            }
+        }
+    }
+
+    label.checkbox-inner {
+        display: block;
+        position: relative;
+        cursor: pointer;
+        user-select: none;
+
+        height: 50px;
+        /* width: 100%; */
+
+        /* Hide the default input */
+        input {
+            position: absolute;
+
+            width: 0;
+            height: 0;
+
+            cursor: pointer;
+            opacity: 0;
+        }
+
+        input:checked {
+            &~.checkmark {
+                /* background-color: #30c4b819; */
+                transition: 0.3s;
+                border-top: 2px solid #20a46c;
+                border-left: 2px solid #20a46c;
+                border-bottom: 2px solid #20a46c;
+            }
+
+            &~.checkmark>.checkmark-inner {
+                border: 0;
+                background-color: var(--green);
+            }
+
+            &~.label-text {
+                transition: 0.3s;
+                color: var(--green);
+                border-top: 2px solid #20a46c;
+                border-right: 2px solid #20a46c;
+                border-bottom: 2px solid #20a46c;
+            }
+
+            /* Show the tick when checked */
+            &~.checkmark:after {
+                display: block;
+            }
+        }
+
+        /* Custom checkbox */
+        .checkmark {
+            position: absolute;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            /* top: -4px; */
+            left: 0;
+            gap: 15px;
+
+            width: var(--checkbox-checkmark-width);
+            height: 50px;
+
+            border-top-left-radius: 8px;
+            border-bottom-left-radius: 8px;
+            background-color: #f8f8f8;
+            /* background-color: #30c4b819; */
+            transition: 0.25s;
+
+            .checkmark-inner {
+                display: inline-block;
+
+                width: 18px;
+                height: 18px;
+
+                border-radius: 3px;
+                background-color: #fff;
+                border: 1px solid #eaeaea;
+            }
+        }
+
+        /* Custom checkmark indicator (tick) */
+        .checkmark:after {
+            content: '';
+            position: absolute;
+            display: none;
+            top: 17px;
+            width: 4px;
+            height: 8px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+        .label-text {
+            margin-left: 60px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            justify-content: flex-start;
+
+            height: 50px;
+            width: calc(100% - var(--checkbox-checkmark-width));
+            padding-right: 20px;
+
+            white-space: nowrap;
+            font-weight: 500;
+            color: #999999;
+            background-color: #f8f8f8;
+            border-top-right-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+    }
+
+    label.checkbox-inner:hover {
+        input {}
+
+        .checkmark,
+        .label-text {
+            background-color: #6d7e9b19;
+            transition: 0.25s;
+
+            .checkmark-inner {}
+        }
+    }
+
+    label.checkbox-inner-read-state {
+        opacity: 0.8;
+        cursor: default;
+    }
+
+    label.checkbox-inner-read-state:hover {
+
+        .checkmark,
+        .label-text {
+            background-color: #f8f8f8;
+        }
+    }
+
+    /* Related to resizable textarea */
+    .hidden-div {
+        display: none;
+
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        line-height: unset;
+    }
+
+    .radio-options {
+        display: inline-flex;
+        gap: 20px;
+
+        /* padding: 10px 20px; */
+        padding: 5px 20px 10px;
+
+        border-radius: 5px;
+        background-color: #fff;
+        /* For parent to clip child bgc: https://stackoverflow.com/questions/3714862 */
+        overflow: hidden;
+
+        label {
+            position: relative;
+            flex-grow: 1;
+
+            height: 50px;
+
+            user-select: none;
+
+            color: #999999;
+            border: 1px solid #eeeeee;
+            border-radius: 8px;
+
+            /* Hide this */
+            input {
+                position: absolute;
+                opacity: 0;
+                cursor: pointer;
+                width: 0;
+                height: 0;
+
+                &:checked {
+                    &~.checkmark {
+                        display: flex;
+                        gap: 5px;
+
+                        font-weight: 500;
+                        color: var(--green);
+                        /* background-color: var(--green); */
+                        border-radius: 3px;
+                        transition: 0.3s;
+                        border: 2px solid var(--green);
+
+                        .selection-circle {
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+
+                            width: 20px;
+                            height: 20px;
+
+                            background-color: var(--green);
+                            border-radius: 99px;
+
+                            .selected {
+                                width: 10px;
+                                height: 5px;
+
+                                border-bottom: 2px solid white;
+                                border-left: 2px solid white;
+                                transform: rotate(-43deg);
+                            }
+                        }
+                    }
+
+                    &~.checkmark:after {
+                        display: block;
+                    }
+                }
+            }
+
+            /* Create a custom radio button */
+            .checkmark {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                /* height: 28px; */
+                height: 100%;
+                padding: 5px 10px;
+                /* margin: 0 60px 0 0; */
+
+                font-weight: 500;
+                transition: 0.3s;
+                color: var(--grey);
+
+                /* Create the indicator (the dot/circle - hidden when not checked) */
+                &:after {
+                    /* content: ''; */
+                    /* position: absolute; */
+                    /* display: none; */
+                    /*  */
+                    /* top: 9px; */
+                    /* left: 9px; */
+                    /* width: 8px; */
+                    /* height: 8px; */
+                    /* border-radius: 50%; */
+                    /* background: white; */
+                }
+
+                .label-text {
+                    /* margin: 0 0 0 15px; */
+                }
+            }
+
+            &:hover {
+                cursor: pointer;
+
+                input:not(:checked)~.checkmark {
+                    /* background-color: #ddd; */
+                    transition: 0.3s;
+                }
+            }
+        }
+    }
+
+    /* Success/errror related */
+    .input-element-wrapper.error,
+    .date-input.error,
+    .select-field-inner .select-box.error,
+    textarea.input-element.error,
+    .time-input-display.error {
+        border: 1px solid var(--red);
+    }
+
+    .success-message,
+    .error-message {
+        display: inline-block;
+
+        margin-top: 5px;
+
+        letter-spacing: 0.02em;
+        font-size: 0.9em;
+    }
+
+    .read-state-value {
+        margin-top: 10px;
+        margin-bottom: 10px;
+
+        font-weight: 500;
+        color: var(--input-value-color);
+    }
+
+    .input-display-text {
+        font-size: 1.07em;
+        color: #2c406e;
+    }
+
+    .success-message {
+        color: var(--green);
+    }
+
+    .error-message {
+        color: var(--red);
     }
 }
 
