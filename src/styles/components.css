@@ -1,3 +1,69 @@
+#header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 50px 0 20px;
+  height: var(--header-height);
+
+  box-shadow: 0 0 18px 0 #E6E6E6;
+  z-index: 20;
+
+  background-color: var(--white);
+
+  .left-section {
+    .app-logo img {
+      width: 32px;
+    }
+  }
+
+  .right-section {
+    /* justify-self: flex-end; */
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    .user-profile-picture {
+      img {
+        width: 40px;
+        height: 40px;
+
+        border-radius: 99px;
+        object-fit: cover;
+      }
+    }
+
+    .user-details {
+      .user-name {
+        font-weight: 600;
+        font-size: 1.531em;
+      }
+
+      .user-role {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        .role-name {
+          font-size: 0.918em;
+          font-weight: 500;
+        }
+
+        .role-icon {
+          height: 12px;
+          width: 12px;
+        }
+      }
+    }
+  }
+}
+
+
 #sidebar {
     position: fixed;
     top: var(--header-height);

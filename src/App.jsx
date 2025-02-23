@@ -5,6 +5,7 @@ import './main.css'
 import Sidebar from './components/sidebar'
 import TasksPage from '../src/pages/tasks'
 import NotFoundView from './pages/not-found'
+import Header from './components/header'
 
 function App() {
     const [ pages ] = useState([
@@ -79,6 +80,7 @@ function ElementWrapper(props) {
     }, []);
 
     return <div id='main-grid' className={`${mainClassName}`}>
+        <Header />
         <Sidebar />
         <props.component heading={props.heading} />
     </div>
