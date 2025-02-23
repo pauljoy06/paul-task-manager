@@ -22,7 +22,7 @@ function Icon(props) {
                 width: width ? width + 'px' : undefined,
                 height: height ? height + 'px' : undefined,
                 backgroundImage:
-                    `url(/assets/icons/${props.path ? props.path : 'placeholder.svg'})`,
+                    `url(/icons/${props.path ? props.path : 'placeholder.svg'})`,
                 backgroundRepeat: 'no-repeat',
                 backgroundPosition: 'center',
                 backgroundSize: `${width}px ${height}px`,

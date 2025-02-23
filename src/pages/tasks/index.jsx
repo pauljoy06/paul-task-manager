@@ -1,6 +1,9 @@
 const TasksPage = (props) => {
-    return <div className='tasks-page'>
-        {}
+    return <div id='tasks-page' className='app-content listing-view'>
+        <h1>HELLO </h1>
+        <div className='page-content'>
+
+        </div>
     </div>
 }
 

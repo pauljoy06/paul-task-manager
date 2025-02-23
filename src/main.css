@@ -3,4 +3,83 @@
 @import './styles/components.css';
 
 @import './App.css';
+@import './styles/pages/tasks.css';
+
+
+html {
+    scroll-behavior: smooth;
+    #main-grid {
+        display: grid;
+        grid-template-rows:
+            var(--header-height)
+            minmax(
+            calc(
+            100vh
+            - var(--header-height)
+            - var(--content-top-margin)
+            - var(--content-bottom-margin)
+            ),
+            max-content
+            )
+            var(--list-view-bottom-margin)
+            ;
+        grid-template-columns: minmax(20px, 190px) minmax(320px, 1fr) minmax(20px, 30px);
+        grid-template-areas:
+            '.            .             .'
+            '.            content       .'
+            '.            .             .'
+            ;
+
+        width: 100vw;
+        min-height: 100vh;
+        background-color: var(--body-color);
+
+        /* Area excluding the header and the footer */
+        .app-content {
+            grid-area: content;
+        }
+
+        .listing-view {
+            display: grid;
+            grid-template-rows: var(--title-row-height) max-content;
+            grid-template-areas:
+                '.'
+                'content'
+                ;
+
+            /* Extra spacing for listing page */
+            margin-right: 10px;
+
+            .page-content {
+                min-height: calc(
+                    100vh
+                    - var(--header-height)
+                    - var(--title-row-height)
+                    /* - var(--list-view-top-height) */
+                    - var(--list-view-bottom-margin)
+                    );
+            }
+        }
+
+        /* Scrollbar related */
+        &::-webkit-scrollbar {
+            width: 7px;
+            height: 7px;
+        }
+
+        &::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+        }
+    }
+
+    .expanded-view {
+        grid-template-columns: minmax(20px, 110px) minmax(320px, 1fr) minmax(20px, 30px) !important;
+    }
+}
 

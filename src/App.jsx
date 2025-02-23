@@ -18,11 +18,9 @@ function App() {
             title: 'Tasks',
             heading: 'Tasks',
         },
-    ])
+    ]);
 
     return <Router>
-        <Sidebar />
-        <TasksPage />
         <Routes>
             {/* 404 route */}
             <Route path='*' element={<NotFoundView />} />
@@ -57,7 +55,33 @@ function ElementWrapper(props) {
         return <Navigate to={props.redirectTo} />
     }
 
-    return <props.component heading={props.heading} />
+    const [ mainClassName, setMainClassName] = useState(
+        JSON.parse(localStorage.getItem('preferences.sidebarCollapsed'))
+            ? 'expanded-view'
+            : ''
+    );
+
+    useEffect(() => {
+        const handleStorageChange = (e) => {
+            if (e.key === 'preferences.sidebarCollapsed') {
+                setMainClassName(JSON.parse(localStorage.getItem('preferences.sidebarCollapsed'))
+                    ? ' expanded-view'
+                    : ''
+                )
+            }
+        };
+
+        window.addEventListener('storage', handleStorageChange);
+
+        return () => {
+            window.removeEventListener('storage', handleStorageChange);
+        };
+    }, []);
+
+    return <div id='main-grid' className={`${mainClassName}`}>
+        <Sidebar />
+        <props.component heading={props.heading} />
+    </div>
 }
 
 

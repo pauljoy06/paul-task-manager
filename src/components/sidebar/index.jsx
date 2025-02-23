@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {  NavLink } from 'react-router-dom';
 import { Icon } from '..';
 
-export default function Sidebar(props) {
+export default function Sidebar() {
     const [ isCollapsed, setIsCollapsed] = useState(
         JSON.parse(localStorage.getItem('preferences.sidebarCollapsed'))
     );
