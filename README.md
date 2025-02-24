@@ -8,11 +8,15 @@ I built this using **Vite and React**, as it offered the fastest way to get star
 
 ## Assumptions & Design Decisions
 
-- **State Management:** Used React's built-in state (`useState` & `useReducer`). Given the project scope, React’s default state management felt sufficient.
-- **Scalability Considerations:** The table and core components were built with the assumption that additional views and pages might be required in the future.
-- **No Pagination:** The task list loads in full, as pagination wasn't prioritized.
-- **No Data Table Libraries:** Sorting, filtering, and all UI interactions were implemented manually to align with the project requirements.
-- **Accessibility & Design:** Given time constraints, accessibility and design refinements took a backseat in favor of functionality.
+Given the limited time (**constraints due to my own office work and health**) for this project, I decided to lean into my strengths and focus on the **core functionality** rather than perfecting the design. Most of my effort went into **building the table, data hooks, and components from scratch** to ensure flexibility and scalability. While the UI could be more polished, the foundation is strong and structured in a way that makes future enhancements seamless.
+
+- **Prioritized Functionality Over Design** – With time constraints, I focused on structuring data, managing state, and ensuring smooth interactions rather than refining UI details.
+- **Custom-Built Components** – The table, state management, and UI interactions were built from the ground up, without relying on external data table libraries.
+- **No Pagination Yet** – Right now, all tasks load at once. If the dataset grows, pagination would be a good next step.
+- **React State Management** – Stuck to `useState` and `useReducer` as they were sufficient for handling the app’s needs.
+- **Future-Proofing** – While this version has a single view, the structure allows for easy expansion with additional pages or layouts down the road.
+- **Minimal Accessibility Considerations** – Given the time constraints, I had to put accessibility and detailed UI refinements on the back burner.
+
 
 ## Interesting Things to Know
 
