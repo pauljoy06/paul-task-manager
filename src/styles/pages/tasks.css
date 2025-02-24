@@ -1,2 +1,7 @@
 .page-content {
 }
+
+.modal .inner {
+    padding: 15px;
+    width: 45vw;
+}

@@ -222,11 +222,67 @@ function getDayLabel(date,
     return dayLabel;
 }
 
+// Converts a list of items into Select suitable options
+const getOptions = function(list, label='name', value='value',labelKey='name', idKey='value') {
+    var options = list.map(item => {
+        return {
+            [labelKey]: item[label],
+            [idKey]: item[value],
+        }
+    });
+
+    return options;
+}
+
+// Converts a map (object) to a list
+const getList = function(object, property1, property2) {
+    var list = [];
+    for (var fieldName in object) {
+        if (object.hasOwnProperty(fieldName)) {
+            list.push({
+                [property1]: fieldName,
+                [property2]: object[fieldName],
+            });
+        }
+    }
+
+    return list;
+}
+
+const toLower = function(str) {
+    return str ? str.toLowerCase() : str;
+}
+
+const toUpper = function(str) {
+    return str ? str.toUpperCase() : str;
+}
+
+const loadStoredData = (storageKey) => {
+    try {
+        const storedData = localStorage.getItem(storageKey);
+        console.log("usePaginatedData :: Initial Load :: storedData", storageKey, storedData);
+        if (storedData) {
+            const parsedData = JSON.parse(storedData);
+            return Array.isArray(parsedData) ? parsedData : [];
+        }
+    } catch (error) {
+        console.error("Error loading stored data:", error);
+    }
+    return []; // Default to empty array if anything goes wrong
+};
+
+
 export {
     copy,
     equal,
     byString,
     getTime,
     getMap,
+    getList,
+    getOptions,
     getDayLabel,
+    loadStoredData,
+
+    toLower,
+    toUpper,
 }

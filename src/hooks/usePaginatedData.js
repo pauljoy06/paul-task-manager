@@ -1,4 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
+import { loadStoredData } from '@/utils';
+
 
 /**
  * Custom hook for managing data with localStorage persistence.
@@ -12,21 +14,15 @@ import { useState, useEffect, useMemo } from 'react';
 export function usePaginatedData({
     storageKey,
     filterBy = '',
-    sortBy = 'id',
-    pageSize = 10,
+    sortBy,
+    pageSize = 200,
     initialPage = 1
 }) {
-    const [data, setData] = useState([]);
+    const [data, setData] = useState(() => loadStoredData(storageKey));
 
     const [filterQuery, setFilterQuery] = useState('');
     const [currentPage, setCurrentPage] = useState(initialPage);
     const [totalPages, setTotalPages] = useState(1);
-
-    // Load data from localStorage on mount
-    useEffect(() => {
-        const storedData = localStorage.getItem(storageKey);
-        setData(storedData ? JSON.parse(storedData) : []);
-    }, [storageKey]);
 
     // Persist data to localStorage whenever it changes
     useEffect(() => {
@@ -43,7 +39,13 @@ export function usePaginatedData({
 
     // CRUD Operations
     const addItem = (item) => {
-        setData((prev) => [...prev, { id: Date.now(), ...item }]);
+        console.log('###item', item);
+        const highestId = data.length > 0 ? Math.max(...data.map((item) => item.id)) : 0;
+        const newItem = { id: highestId + 1, ...item };
+        const newData = [ newItem, ...data];
+        setData(newData);
+        console.log('######finalData', newData[0]);
+        return newData;
     };
 
     const updateItem = (id, updatedItem) => {
