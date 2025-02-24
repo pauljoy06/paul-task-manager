@@ -1,4 +1,6 @@
-import Modal from "./modal";
+import Modal from './modal';
+import Table from './table';
+import PageTopRow from './PageTopRow';
 
 /**
      * Icon component for displaying an icon with customizable size and style.
@@ -51,4 +53,6 @@ function Icon(props) {
 export {
     Icon,
     Modal,
+    Table,
+    PageTopRow,
 }

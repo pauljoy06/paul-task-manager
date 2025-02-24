@@ -6,6 +6,7 @@ import Sidebar from './components/sidebar'
 import TasksPage from '../src/pages/tasks'
 import NotFoundView from './pages/not-found'
 import Header from './components/header'
+import { MeContext } from '@/contexts';
 
 function App() {
     const [ pages ] = useState([
@@ -21,27 +22,29 @@ function App() {
         },
     ]);
 
-    return <Router>
-        <Routes>
-            {/* 404 route */}
-            <Route path='*' element={<NotFoundView />} />
+    return <MeContext.Provider value={{}}> 
+        <Router>
+            <Routes>
+                {/* 404 route */}
+                <Route path='*' element={<NotFoundView />} />
 
-            {/* All the pages */}
-            {pages.map(page => {
-                return <Route
-                    key={page.path}
-                    path={page.path}
-                    element={<ElementWrapper
+                {/* All the pages */}
+                {pages.map(page => {
+                    return <Route
+                        key={page.path}
                         path={page.path}
-                        title={page.title}
-                        component={page.component}
-                        redirectTo={page.redirectTo}
-                        heading={page.heading}
-                    />}
-                />
-            })}
-        </Routes>
-    </Router>
+                        element={<ElementWrapper
+                            path={page.path}
+                            title={page.title}
+                            component={page.component}
+                            redirectTo={page.redirectTo}
+                            heading={page.heading}
+                        />}
+                    />
+                })}
+            </Routes>
+        </Router>
+    </MeContext.Provider>
 }
 function ElementWrapper(props) {
     useEffect(() => {
