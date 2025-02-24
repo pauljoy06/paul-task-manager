@@ -18,6 +18,14 @@ I built this using **Vite and React**, as it offered the fastest way to get star
 
 - **Custom-Built Components:** All inputs, tables, and state management logic were built from the ground up—no external data table libraries.
 
+## Future Enhancements (If More Time)
+
+- 🔹 **Better Design** – Improve UI aesthetics with more refined styling and layout adjustments.
+- 🔹 **Filters** – Add custom filters
+- 🔹 **Toast Messages** – Add user feedback messages for actions like task creation, updates, and deletions.
+- 🔹 **Smooth Animations** – Improve UX with better transitions and micro-interactions.
+
+
 ## Running the Project
 
 1. Clone the repository:
