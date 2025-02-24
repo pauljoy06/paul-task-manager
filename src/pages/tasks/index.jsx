@@ -15,7 +15,6 @@ const INIT_TASK_DATA = {
 }
 
 const TasksPage = (props) => {
-    const [ taskModal, toggleTaskModal ] = useToggle(false);
     const [ columns, setColumns ]  = useState([
         {
             name: 'ID',
@@ -51,9 +50,15 @@ const TasksPage = (props) => {
         setFilterQueryTask,
         currentPageTask,
         setCurrentPageTask,
-        totalPagesTask
+        totalPagesTask,
+        sortByTask,
+        setSortByTask,
+        sortOrderTask,
+        setSortOrderTask,
     ] = usePaginatedData({storageKey: STORAGE_KEY});
 
+    const [ taskFormType, setTaskFormType ] = useState('create'); // create/update
+    const [ taskModal, toggleTaskModal ] = useToggle(false);
     const [
         taskForm,
         setTaskForm,
@@ -61,27 +66,54 @@ const TasksPage = (props) => {
         taskError,
         setTaskError,
     ] = useForm(INIT_TASK_DATA);
+
+    const hoverOptions = [
+        {
+            image: 'edit.svg',
+            onClick: (row) => onEditTaskClick(row),
+        },
+        {
+            image: 'delete-bin-red.svg',
+            onClick: (row) => onTaskDelete(row),
+            requiresConfirmation: true,
+            confirmMessage: 'Are you sure you want to delete this task?',
+        }
+    ];
     
     function onTaskSubmit() {
-        addTask(taskForm);
+        if (taskFormType === 'create') addTask(taskForm);
+        if (taskFormType === 'update') updateTask(taskForm.id, taskForm);
     }
+
+    function onTaskDelete(task) {
+        deleteTask(task.id);
+    }
+
+    function onAddTaskClick() {
+        setTaskFormType('create');
+        toggleTaskModal();
+    }
+
+    function onEditTaskClick(row) {
+        setTaskFormType('update');
+        setTaskForm(row);
+        toggleTaskModal();
+    }
+
 
     // To initialise tasks if localStorage is empty
     useEffect(() => {
         const loadData = async () => {
             const storedData = localStorage.getItem(STORAGE_KEY);
             if (storedData) {
-                console.log('$$$$$$ if', typeof storedData, storedData);
                 const parsedData = JSON.parse(storedData);
                 if (Array.isArray(parsedData)) {
                     setTasks(parsedData);
-                    console.log('$$$$$$storedData', typeof parsedData, parsedData);
                     if (parsedData.length > 0) return;
                 }
             }
             
             try {
-                console.log('Executing data refresh........!!!');
                 const response = await fetch(SAMPLE_DATA_URL);
                 const data = await response.json();
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
@@ -96,23 +128,30 @@ const TasksPage = (props) => {
     }, []);
 
     return <div id='tasks-page' className='app-content listing-view'>
+        <PageTopRow
+            title='Tasks'
+            buttonText='+ Add Task'
+            onButtonClick={onAddTaskClick}
+        />
         <div className='page-content'>
-            <PageTopRow
-                title='Tasks'
-                buttonText='+ Add Task'
-                onButtonClick={toggleTaskModal}
-            />
             <Table
+                loaded={true}
                 items={tasks} 
                 columns={columns}
-                loaded={true}
+                tableEmptyText='No tasks'
+                hoverOptions={hoverOptions}
+                sortBy={sortByTask}
+                setSortBy={setSortByTask}
+                sortOrder={sortOrderTask}
+                setSortOrder={setSortOrderTask}
             />
         </div>
         {taskModal && <Modal
-            title='Add Task'
+            title={taskFormType === 'create' ? 'Add Task' : 'Edit Task'}
             className='task-modal'
             toggleModal={toggleTaskModal}
             form='task-form' 
+            buttonName='Save'
         >
             <form id='task-form' onSubmit={onTaskSubmit}>
                 <div className='title'>
@@ -124,9 +163,17 @@ const TasksPage = (props) => {
                 </div>
                 <div className='status'>
                     <SelectField label='Status'
-                        options={getList(TASK_STATUSES, 'name', 'value')}
+                        options={getList(TASK_STATUSES, 'value', 'name')}
                         name='status'
                         value={taskForm.status}
+                        onChange={onTaskChange}
+                    />
+                </div>
+                <div className='status'>
+                    <SelectField label='Priority'
+                        options={getList(TASK_PRIORITIES, 'value', 'name')}
+                        name='priority'
+                        value={taskForm.priority}
                         onChange={onTaskChange}
                     />
                 </div>
@@ -135,15 +182,5 @@ const TasksPage = (props) => {
 
     </div>
 }
-
-const transformFormToItem = (formData) => {
-    return {
-        title: formData.title.trim(),
-        status: formData.status,
-        priority: formData.priority,
-        ...(formData?.id && {id: formData.id})
-    };
-};
-
 
 export default TasksPage;

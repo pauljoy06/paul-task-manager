@@ -177,7 +177,6 @@ const Table = (props) => {
                     columns={visibleColumns}
                     queryString={props.queryString}
 
-                    updateCollection={props.updateCollection}
                     listName={props.listName}
 
                     // For column reorder functionality to work
@@ -185,8 +184,11 @@ const Table = (props) => {
                     className={tableHeaderClassName}
 
                     //For column sorting
-                    sorting={sorting}
-                    setSorting={setSorting }
+                    sortBy={props.sortBy}
+                    setSortBy={props.setSortBy}
+                    sortOrder={props.sortOrder}
+                    setSortOrder={props.setSortOrder}
+
 
                     //For column preferences
                     availableColumns={props.columns}

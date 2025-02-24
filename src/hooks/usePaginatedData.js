@@ -1,28 +1,32 @@
 import { useState, useEffect, useMemo } from 'react';
 import { loadStoredData } from '@/utils';
 
-
 /**
  * Custom hook for managing data with localStorage persistence.
  * Supports filtering, sorting, pagination, and CRUD operations.
  * @param {string} storageKey - The localStorage key to store data
  * @param {string} filterBy - The field name to filter by
- * @param {string} sortBy - The field name to sort by
+ * @param {string} sortByP - The field name to sort by
  * @param {number} pageSize - Number of items per page
  * @param {number} initialPage - Initial page number
  */
 export function usePaginatedData({
     storageKey,
     filterBy = '',
-    sortBy,
+    sortByP,
+    sortOrderP,
     pageSize = 200,
     initialPage = 1
 }) {
     const [data, setData] = useState(() => loadStoredData(storageKey));
-
+    const [sortBy, setSortBy] = useState(sortByP);
+    const [sortOrder, setSortOrder] = useState(sortOrderP); // 'asc', 'desc', null
     const [filterQuery, setFilterQuery] = useState('');
     const [currentPage, setCurrentPage] = useState(initialPage);
     const [totalPages, setTotalPages] = useState(1);
+
+    const priorityOrder = { low: 1, medium: 2, high: 3 };
+    const statusOrder = { not_started: 1, in_progress: 2, completed: 3 };
 
     // Persist data to localStorage whenever it changes
     useEffect(() => {
@@ -39,12 +43,10 @@ export function usePaginatedData({
 
     // CRUD Operations
     const addItem = (item) => {
-        console.log('###item', item);
         const highestId = data.length > 0 ? Math.max(...data.map((item) => item.id)) : 0;
         const newItem = { id: highestId + 1, ...item };
-        const newData = [ newItem, ...data];
+        const newData = [newItem, ...data];
         setData(newData);
-        console.log('######finalData', newData[0]);
         return newData;
     };
 
@@ -65,13 +67,23 @@ export function usePaginatedData({
             : data;
     }, [data, filterQuery, filterBy]);
 
-    // Sorting
     const sortedData = useMemo(() => {
+        if (!sortBy || !sortOrder) return filteredData;
+
         return [...filteredData].sort((a, b) => {
-            if (typeof a[sortBy] === 'string') return a[sortBy].localeCompare(b[sortBy]);
-            return a[sortBy] - b[sortBy];
+            let result = 0;
+            if (sortBy === 'id') {
+                result = a.id - b.id;
+            } else if (sortBy === 'title') {
+                result = a.title.localeCompare(b.title);
+            } else if (sortBy === 'priority') {
+                result = (priorityOrder[a.priority] || 0) - (priorityOrder[b.priority] || 0);
+            } else if (sortBy === 'status') {
+                result = (statusOrder[a.status] || 0) - (statusOrder[b.status] || 0);
+            }
+            return sortOrder === 'asc' ? result : -result;
         });
-    }, [filteredData, sortBy]);
+    }, [filteredData, sortBy, sortOrder]);
 
     // Pagination
     useEffect(() => {
@@ -94,6 +106,10 @@ export function usePaginatedData({
         currentPage,
         setCurrentPage,
         totalPages,
+        sortBy,
+        setSortBy,
+        sortOrder,
+        setSortOrder
     ];
 }
 

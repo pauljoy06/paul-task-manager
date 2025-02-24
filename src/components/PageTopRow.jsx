@@ -27,9 +27,9 @@ const PageTopRow = (props) => {
         </div>
         <div className='top-row-right'>
             {<>
-                <div className='search-box-wrapper'>
+                {false && <div className='search-box-wrapper'>
                     {searchInput}
-                </div>
+                </div>}
                 {props.buttonText && <div className='add-record-button'>
                     <button className='button primary-button' data-test='primary-button'
                         onClick={e => {

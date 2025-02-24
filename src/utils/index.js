@@ -260,7 +260,6 @@ const toUpper = function(str) {
 const loadStoredData = (storageKey) => {
     try {
         const storedData = localStorage.getItem(storageKey);
-        console.log("usePaginatedData :: Initial Load :: storedData", storageKey, storedData);
         if (storedData) {
             const parsedData = JSON.parse(storedData);
             return Array.isArray(parsedData) ? parsedData : [];

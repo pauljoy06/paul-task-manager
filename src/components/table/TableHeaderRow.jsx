@@ -8,94 +8,39 @@ import { byString, equal, copy } from '@/utils';
 
 export default function TableHeaderRow(props) {
     // For column reorder - used inside the Column component
-    const [ source, setSource ] = useState();
     const [
         expandColumnPreference,
         toggleExpandColumnPreference,
     ]  = useToggle(false);
 
-    function onColumnSortClick(colID, sortable, e) {
-        var list = [...props.items];
-
-        // Frontend sorting
-        if (props.sorting.sortedColID === colID) {
-            // console.log('Reverse sorting..');
-            list.reverse();
-            props.setSorting((sorting) => ({
-                ...sorting,
-                reverseSorted: !sorting.reverseSorted,
-            }));
+    function onColumnSortClick(colID) {
+        if (props.sortBy === colID) {
+            // Cycle sorting order: asc, desc, null
+            const newOrder = props.sortOrder === 'asc' ? 'desc' : props.sortOrder === 'desc' ? null : 'asc';
+            props.setSortOrder(newOrder);
+            if (newOrder === null) props.setSortBy(null);
         } else {
-            // console.log('Normal sorting..');
-            list.sort((a, b) => {
-                if (byString(a, colID) === byString(b, colID)) {
-                    return 0;
-                } else {
-                    return (byString(a, colID) < byString(b, colID)) ? -1 : 1;
-                }
-            });
-            props.setSorting((sorting) => ({
-                sortedColID: colID,
-                reverseSorted: false,
-            }));
-        }
-        props.updateCollection({items: list})
-    }
-
-    function toggleAllRowsSelection(e) {
-        let select = false;
-        if (rowsSelectionState === 'none') {
-            select = true;
-        }
-
-        let tempItems = copy(props.items);
-        tempItems.map(item => {
-            item._selected = select;
-        });
-
-        // console.log('Toggling everything..');
-        props.updateCollection({
-            items: tempItems
-        });
-    }
-
-    function getRowsSelectionState() {
-        // Returns: 'all'/'none'/'some'
-        let selectedCount = 0;
-        let unselectedCount = 0;
-        props.items.map(item => {
-            if (item._selected) {
-                selectedCount += 1;
-            } else {
-                unselectedCount += 1;
-            }
-        });
-
-        if (selectedCount === 0) {
-            return 'none';
-        } else if (unselectedCount === 0) {
-            return 'all';
-        } else {
-            return 'some';
+            // Set new column and start with ascending order
+            props.setSortBy(colID);
+            props.setSortOrder('asc');
         }
     }
-
-    const rowsSelectionState = getRowsSelectionState();
 
     return (
         <tr className={`table-header-row${props.className ? ' '+props.className : ''}`}>
             {props.columns.map((col) => <Column
                 key={col.id}
                 column={col}
-                customData={props.customData}
-                sorting={props.sorting}
-                onColumnSortClick={onColumnSortClick}
 
                 // For column reordering
                 columns={props.columns}
                 setColumns={props.setColumns}
-                source={source}
-                setSource={setSource}
+
+                sortBy={props.sortBy}
+                setSortBy={props.setSortBy}
+                sortOrder={props.sortOrder}
+                setSortOrder={props.setSortOrder}
+                onColumnSortClick={onColumnSortClick}
             />)}
             {props.enableColumnPreference && <div className='column-preferences'>
                 <div className='column-preferences-toggle'>
@@ -130,31 +75,19 @@ export default function TableHeaderRow(props) {
 }
 
 function Column(props) {
-    // if (!props?.col.visible) {
-        //Added to check feasibility of column preferences using CSS
-        // return;
-    // }
-    return <th key={props.column.id}
+    return <th
+        key={props.column.id}
         className={`data-header ${props.column.headerClassName || ''} table-header-data`}
     >
-        <div className='draggable-header'
-            id={props.column.id}
-        >
-            {props.column.renderHeader
-                ? props.column.renderHeader(props.column, props.customData)
-                : <span className='column-name'
-                    onClick={props.column.sortable
-                        ? () => props.onColumnSortClick(props.column.id, props.column.sortable)
-                        : null
-                    }
-                >
-                    {props.column.name}
-                    {props.column.id === props.sorting.sortedColID
-                        ? props.sorting.reverseSorted ? ' ↓' : ' ↑'
-                        : ''
-                    }
-                </span>
-            }
+        <div id={props.column.id}>
+            <span className='column-name' onClick={() => props.onColumnSortClick(props.column.id)}>
+                {props.column.name}
+                {props.sortBy === props.column.id
+                    ? props.sortOrder === 'asc' ? ' ↑' 
+                        : props.sortOrder === 'desc' ? ' ↓' 
+                            : ''
+                    : ''}
+            </span>
         </div>
     </th>
 }
